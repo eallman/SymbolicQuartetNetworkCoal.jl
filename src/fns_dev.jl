@@ -1,3 +1,18 @@
+# function network_expectedCF_formulas_v2(network::HybridNetwork; 
+#         showprogressbar=false, 
+#         inheritancecorrelation=0, 
+#         filename="symbolicQNC_HFO_out"::AbstractString,     
+#         symbolic=false::Bool,
+#         savecsv=false::Bool,
+#         macaulay=false::Bool,
+#         matlab=false::Bool,
+#         multigraded=false::Bool,
+#         singular=false::Bool,
+#         dpoints::Integer=7   # ESA
+#         )
+# function printCFs(qData::Vector{PN.QuartetT{MVector{3, Float64}}},
+# function makeEdgeLabel_v2(net::PN.HybridNetwork; showAllEdgeLabels::Bool=false)
+
 #=
 tauSymbol = "t_"
 
@@ -407,13 +422,9 @@ function makeEdgeLabel_v2(net::PN.HybridNetwork; showAllEdgeLabels::Bool=false)
         hybridEdgeNumbers = map(e -> e.number, net.edge[hybridEdgeInds])
         hybridNodeInds = findall(n -> n.hybrid, net.node)
 
-
-        ## ESA need to delete both child edges of root
+        edge_numbers_to_remove = []
 
         # first check if root is parent of leaf
-        # not sure if needs to be initialized
-        # edge_numbers_to_remove = []
-        # edge_numbers_to_remove = [e.number for e in net.node[net.root].edge if getchild(e).leaf ]
         rootHasLeafChild = false
         for e in net.node[net.root].edge
             if getchild(e).leaf
@@ -422,7 +433,6 @@ function makeEdgeLabel_v2(net::PN.HybridNetwork; showAllEdgeLabels::Bool=false)
                 break
             end
         end
-        
 
         # now check if hyrid nodes have only one descendant
         hybridNodesWithOneLeafDescendant = [n for n in net.node[hybridNodeInds] if getchild(n).leaf]
@@ -446,9 +456,9 @@ end
 
 
 
-##
-R"par(mfrow=c(1,2))"
-##
-plot(ntwk,showedgenumber=true);
-plot(ntwk,shownodenumber=true);
-##
+# ##
+# R"par(mfrow=c(1,2))"
+# ##
+# plot(ntwk,showedgenumber=true);
+# plot(ntwk,shownodenumber=true);
+# ##
