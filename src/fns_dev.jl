@@ -1,8 +1,3 @@
-using Dates
-
-# Remember to fix this
-# const symCF = SymbolicQuartetNetworkCoal
-
 # Working on improvements
 
 # List of functions in this file
@@ -431,6 +426,11 @@ function makeEdgeLabel_v2(net::PN.HybridNetwork; showAllEdgeLabels::Bool=false)
         hybridEdgeNumbers = map(e -> e.number, net.edge[hybridEdgeInds])
         hybridNodeInds = findall(n -> n.hybrid, net.node)
 
+        # ESA
+        println(hybridEdgeInds)
+        println(hybridEdgeNumbers)
+        println(hybridNodeInds)
+
         edge_numbers_to_remove = []
 
         # first check if root is parent of leaf
@@ -445,6 +445,11 @@ function makeEdgeLabel_v2(net::PN.HybridNetwork; showAllEdgeLabels::Bool=false)
 
         # now check if hyrid nodes have only one descendant
         hybridNodesWithOneLeafDescendant = [n for n in net.node[hybridNodeInds] if getchild(n).leaf]
+        # ESA
+        # PP.plot(net, shownodenumber=true)
+        # println(" ***** ")
+        # println(hybridNodesWithOneLeafDescendant)
+        # println(" ***** ")
         foreach(x -> push!(edge_numbers_to_remove, getparentedge(x).number), hybridNodesWithOneLeafDescendant)
         foreach(x -> push!(edge_numbers_to_remove, getparentedgeminor(x).number), hybridNodesWithOneLeafDescendant)
 
